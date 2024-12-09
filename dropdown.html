@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Menu</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            font-family: "PT Sans", sans-serif;
+            padding: 30px;
+        }
+
+        .dropdown {
+            width: 100%;
+            position: relative;
+        }
+
+        .dropdown-btn {
+            background-color: #fafafa;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .dropdown-btn span {
+            color: #000;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .caret {
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 7px solid #000;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .dropdown-menu {
+            background-color: #fafafa;
+            position: absolute;
+            left: 0;
+            top: calc(100% + 5px);
+            z-index: 2;
+            width: 100%;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9);
+            transform-origin: top;
+            transition: opacity 0.3s, transform 0.3s;
+            border-radius: 5px;
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+            padding: 10px 20px;
+        }
+
+        .dropdown-menu li:hover {
+            background-color: #eee;
+        }
+
+        .dropdown-menu li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 16px;
+            font-weight: 500;
+            display: block;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .caret.active {
+            transform: rotate(-180deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dropdown">
+        <div class="dropdown-btn">
+            <span class="select">Hello</span>
+            <div class="caret"></div>
+        </div>
+        <ul class="dropdown-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#login">Login</a></li>
+            <li><a href="#signup">Signup</a></li>
+        </ul>
+    </div>
+
+    <div class="dropdown">
+        <div class="dropdown-btn">
+            <span class="select">Menu</span>
+            <div class="caret"></div>
+        </div>
+        <ul class="dropdown-menu">
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#settings">Settings</a></li>
+            <li><a href="#logout">Logout</a></li>
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdowns = document.querySelectorAll(".dropdown");
+
+            dropdowns.forEach((dropdown) => {
+                const dropdownBtn = dropdown.querySelector(".dropdown-btn");
+                const dropdownMenu = dropdown.querySelector(".dropdown-menu");
+                const caret = dropdown.querySelector(".caret");
+
+                dropdownBtn.addEventListener("click", function () {
+                    dropdowns.forEach((item) => {
+                        if (item !== dropdown) {
+                            item.querySelector(".dropdown-menu").classList.remove("active");
+                            item.querySelector(".caret").classList.remove("active");
+                        }
+                    });
+
+                    dropdownMenu.classList.toggle("active");
+                    caret.classList.toggle("active");
+                });
+            });
+
+            document.addEventListener("click", function (e) {
+                dropdowns.forEach(function (el) {
+                    if (!el.contains(e.target)) {
+                        el.querySelector(".dropdown-menu").classList.remove("active")
+                        el.querySelector(".caret").classList.remove("active")
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
